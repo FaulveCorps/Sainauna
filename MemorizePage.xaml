@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Sainauna.MemorizePage"
+             Title="Memorize"
+             BackgroundColor="#F5EBDC">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="20">
+
+        <!-- Header -->
+        <Label Grid.Row="0"
+               Text="Memorize Baybayin"
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="#654321"
+               HorizontalOptions="Center"
+               Margin="0,10,0,5"/>
+
+        <!-- Mode Selection -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,0,0,20">
+            <Button Grid.Column="0"
+                    x:Name="Mode1Button"
+                    Text="Type Answer"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="#FFF8DC"
+                    BackgroundColor="#8B5A2B"
+                    CornerRadius="10"
+                    HeightRequest="45"
+                    Clicked="OnMode1Clicked"/>
+            <Button Grid.Column="1"
+                    x:Name="Mode2Button"
+                    Text="Multiple Choice"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="#654321"
+                    BackgroundColor="#D2B48C"
+                    CornerRadius="10"
+                    HeightRequest="45"
+                    Clicked="OnMode2Clicked"/>
+        </Grid>
+
+        <!-- Mode 1: Type Answer -->
+        <VerticalStackLayout Grid.Row="2" x:Name="Mode1Layout" Spacing="15">
+
+            <!-- Score -->
+            <Label x:Name="ScoreLabel"
+                   Text="Score: 0/0"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#8B5A2B"
+                   HorizontalOptions="Center"/>
+
+            <!-- Flashcard - SYMBOL ONLY (no pronunciation visible) -->
+            <Border BackgroundColor="#FFF8DC"
+                    Stroke="#8B5A2B"
+                    StrokeThickness="3"
+                    Padding="30"
+                    Margin="0,20,0,20"
+                    Shadow="{Shadow Brush=Black, Offset='0,6', Radius=10, Opacity=0.3}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image x:Name="SymbolImage"
+                           WidthRequest="180"
+                           HeightRequest="180"
+                           Aspect="AspectFit"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Question -->
+            <Label Text="What is this character?"
+                   FontSize="16"
+                   TextColor="#654321"
+                   HorizontalOptions="Center"/>
+
+            <!-- Answer Entry -->
+            <Entry x:Name="AnswerEntry"
+                   Placeholder="Type your answer..."
+                   FontSize="18"
+                   TextColor="#654321"
+                   PlaceholderColor="#8B7355"
+                   BackgroundColor="#FFF8DC"
+                   HeightRequest="50"
+                   HorizontalTextAlignment="Center"
+                   ReturnCommand="{Binding CheckAnswerCommand}"
+                   Completed="OnCheckAnswer"/>
+
+            <!-- Result -->
+            <Label x:Name="ResultLabel"
+                   Text=""
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0"
+                        Text="Check"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        TextColor="#FFF8DC"
+                        BackgroundColor="#6B8E23"
+                        CornerRadius="10"
+                        HeightRequest="50"
+                        Clicked="OnCheckAnswer"/>
+                <Button Grid.Column="1"
+                        x:Name="NextButton"
+                        Text="Next"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        TextColor="#FFF8DC"
+                        BackgroundColor="#8B5A2B"
+                        CornerRadius="10"
+                        HeightRequest="50"
+                        IsVisible="False"
+                        Clicked="OnNextClicked"/>
+            </Grid>
+
+        </VerticalStackLayout>
+
+        <!-- Mode 2: Multiple Choice -->
+        <VerticalStackLayout Grid.Row="2" x:Name="Mode2Layout" Spacing="15" IsVisible="False">
+
+            <!-- Score -->
+            <Label x:Name="Mode2ScoreLabel"
+                   Text="Score: 0/0"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#8B5A2B"
+                   HorizontalOptions="Center"/>
+
+            <!-- Question -->
+            <Label x:Name="QuestionLabel"
+                   Text="Which character is 'ba'?"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#654321"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,20"/>
+
+            <!-- Options Grid - SYMBOLS ONLY -->
+            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" RowSpacing="15" ColumnSpacing="15">
+
+                <Button Grid.Row="0" Grid.Column="0"
+                        x:Name="Option1Button"
+                        BackgroundColor="#FFF8DC"
+                        CornerRadius="15"
+                        HeightRequest="130"
+                        BorderColor="#8B5A2B"
+                        BorderWidth="2"
+                        Clicked="OnOptionClicked"/>
+
+                <Button Grid.Row="0" Grid.Column="1"
+                        x:Name="Option2Button"
+                        BackgroundColor="#FFF8DC"
+                        CornerRadius="15"
+                        HeightRequest="130"
+                        BorderColor="#8B5A2B"
+                        BorderWidth="2"
+                        Clicked="OnOptionClicked"/>
+
+                <Button Grid.Row="1" Grid.Column="0"
+                        x:Name="Option3Button"
+                        BackgroundColor="#FFF8DC"
+                        CornerRadius="15"
+                        HeightRequest="130"
+                        BorderColor="#8B5A2B"
+                        BorderWidth="2"
+                        Clicked="OnOptionClicked"/>
+
+                <Button Grid.Row="1" Grid.Column="1"
+                        x:Name="Option4Button"
+                        BackgroundColor="#FFF8DC"
+                        CornerRadius="15"
+                        HeightRequest="130"
+                        BorderColor="#8B5A2B"
+                        BorderWidth="2"
+                        Clicked="OnOptionClicked"/>
+            </Grid>
+
+            <!-- Result -->
+            <Label x:Name="Mode2ResultLabel"
+                   Text=""
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,15,0,0"/>
+
+            <!-- Next Button -->
+            <Button x:Name="Mode2NextButton"
+                    Text="Next Question"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="#FFF8DC"
+                    BackgroundColor="#8B5A2B"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    IsVisible="False"
+                    Clicked="OnMode2NextClicked"/>
+
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

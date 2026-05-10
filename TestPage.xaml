@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Sainauna.TestPage"
+             Title="Test Your Baybayin"
+             BackgroundColor="#F5EBDC">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="20">
+
+        <!-- Header -->
+        <Label Grid.Row="0"
+               Text="Test Your Baybayin"
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="#654321"
+               HorizontalOptions="Center"
+               Margin="0,10,0,5"/>
+
+        <!-- Score -->
+        <Label Grid.Row="1"
+               x:Name="ScoreLabel"
+               Text="Points: 0"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="#8B5A2B"
+               HorizontalOptions="Center"
+               Margin="0,0,0,15"/>
+
+        <!-- Mode Selection -->
+        <Grid Grid.Row="2" RowDefinitions="Auto,*">
+
+            <!-- Mode Tabs -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,0,0,15">
+                <Button Grid.Column="0"
+                        x:Name="Mode1Button"
+                        Text="Latin → Baybayin"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="#FFF8DC"
+                        BackgroundColor="#8B5A2B"
+                        CornerRadius="10"
+                        HeightRequest="45"
+                        Clicked="OnMode1Clicked"/>
+                <Button Grid.Column="1"
+                        x:Name="Mode2Button"
+                        Text="Read Baybayin"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="#654321"
+                        BackgroundColor="#D2B48C"
+                        CornerRadius="10"
+                        HeightRequest="45"
+                        Clicked="OnMode2Clicked"/>
+            </Grid>
+
+            <!-- Mode 1: Latin to Baybayin Converter -->
+            <ScrollView Grid.Row="1" x:Name="Mode1Layout">
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Converter Card -->
+                    <Border BackgroundColor="#FFF8DC"
+                            Stroke="#8B5A2B"
+                            StrokeThickness="2"
+                            Padding="20"
+                            Shadow="{Shadow Brush=Black, Offset='0,4', Radius=8, Opacity=0.2}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="15">
+
+                            <Label Text="Enter a word in Latin letters:"
+                                   FontSize="16"
+                                   TextColor="#654321"/>
+
+                            <Entry x:Name="LatinInput"
+                                   Placeholder="e.g., bayan, pilipinas..."
+                                   FontSize="16"
+                                   TextColor="#654321"
+                                   PlaceholderColor="#8B7355"
+                                   BackgroundColor="#F5EBDC"
+                                   HeightRequest="50"/>
+
+                            <Button Text="Convert to Baybayin"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="#FFF8DC"
+                                    BackgroundColor="#6B8E23"
+                                    CornerRadius="10"
+                                    HeightRequest="50"
+                                    Clicked="OnConvertToBaybayin"/>
+
+                            <Label Text="Result:"
+                                   FontSize="14"
+                                   TextColor="#8B7355"/>
+
+                            <!-- Result Display with SYMBOL-ONLY Images -->
+                            <FlexLayout x:Name="BaybayinResultLayout"
+                                       Wrap="Wrap"
+                                       JustifyContent="Center"
+                                       BackgroundColor="#E8DCC8"
+                                       Padding="15">
+                                <Label Text="Your Baybayin will appear here"
+                                       FontSize="16"
+                                       TextColor="#8B7355"
+                                       FontAttributes="Italic"/>
+                            </FlexLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Practice Words -->
+                    <Border BackgroundColor="#E8DCC8"
+                            Stroke="#8B5A2B"
+                            StrokeThickness="2"
+                            Padding="20"
+                            Margin="0,10,0,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="10">
+
+                            <Label Text="Practice Words"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#654321"
+                                   HorizontalOptions="Center"/>
+
+                            <Button Text="Get Random Practice Word"
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    TextColor="#654321"
+                                    BackgroundColor="#D2B48C"
+                                    CornerRadius="10"
+                                    HeightRequest="45"
+                                    Clicked="OnGetPracticeWord"/>
+
+                            <Label x:Name="PracticeWordLabel"
+                                   Text=""
+                                   FontSize="16"
+                                   TextColor="#654321"
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"/>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Mode 2: Baybayin Reading Practice -->
+            <ScrollView Grid.Row="1" x:Name="Mode2Layout" IsVisible="False">
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Reading Card -->
+                    <Border BackgroundColor="#FFF8DC"
+                            Stroke="#8B5A2B"
+                            StrokeThickness="3"
+                            Padding="25"
+                            Shadow="{Shadow Brush=Black, Offset='0,6', Radius=10, Opacity=0.3}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="20">
+
+                            <Label Text="What word is this?"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#654321"
+                                   HorizontalOptions="Center"/>
+
+                            <!-- Baybayin Word Display - SYMBOLS ONLY -->
+                            <FlexLayout x:Name="BaybayinWordLayout"
+                                       Wrap="Wrap"
+                                       JustifyContent="Center"
+                                       BackgroundColor="#E8DCC8"
+                                       Padding="20">
+                                <Label Text="Loading..."
+                                       FontSize="16"
+                                       TextColor="#8B7355"/>
+                            </FlexLayout>
+
+                            <Entry x:Name="ReadingAnswerEntry"
+                                   Placeholder="Type the Latin word..."
+                                   FontSize="16"
+                                   TextColor="#654321"
+                                   PlaceholderColor="#8B7355"
+                                   BackgroundColor="#F5EBDC"
+                                   HeightRequest="50"
+                                   HorizontalTextAlignment="Center"
+                                   Completed="OnCheckReading"/>
+
+                            <Button Text="Check Answer"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="#FFF8DC"
+                                    BackgroundColor="#6B8E23"
+                                    CornerRadius="10"
+                                    HeightRequest="50"
+                                    Clicked="OnCheckReading"/>
+
+                            <Label x:Name="ReadingResultLabel"
+                                   Text=""
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+
+                            <Button x:Name="NextWordButton"
+                                    Text="Next Word"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="#FFF8DC"
+                                    BackgroundColor="#8B5A2B"
+                                    CornerRadius="10"
+                                    HeightRequest="50"
+                                    IsVisible="False"
+                                    Clicked="OnNextWord"/>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Sainauna.QuizPage"
+             Title="Baybayin Quiz"
+             BackgroundColor="#F5EBDC">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Padding="20">
+
+        <!-- Header -->
+        <Label Grid.Row="0"
+               Text="Baybayin Quiz"
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="#654321"
+               HorizontalOptions="Center"
+               Margin="0,10,0,5"/>
+
+        <!-- Progress -->
+        <Label Grid.Row="1"
+               x:Name="ProgressLabel"
+               Text="Question 1 of 10"
+               FontSize="16"
+               TextColor="#8B7355"
+               HorizontalOptions="Center"
+               Margin="0,0,0,10"/>
+
+        <!-- Score -->
+        <Label Grid.Row="2"
+               x:Name="ScoreLabel"
+               Text="Score: 0/10"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="#8B5A2B"
+               HorizontalOptions="Center"
+               Margin="0,0,0,20"/>
+
+        <!-- Question Card -->
+        <Border Grid.Row="3"
+                BackgroundColor="#FFF8DC"
+                Stroke="#8B5A2B"
+                StrokeThickness="3"
+                Padding="25"
+                Margin="0,0,0,20"
+                Shadow="{Shadow Brush=Black, Offset='0,6', Radius=10, Opacity=0.3}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Question Text -->
+                <Label x:Name="QuestionLabel"
+                       Text="What is Baybayin?"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#654321"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"/>
+
+                <!-- SYMBOL DISPLAY for character questions -->
+                <Image x:Name="QuestionSymbolImage"
+                       WidthRequest="120"
+                       HeightRequest="120"
+                       Aspect="AspectFit"
+                       IsVisible="False"
+                       HorizontalOptions="Center"/>
+
+                <!-- Answer Buttons -->
+                <VerticalStackLayout Spacing="10">
+                    <Button x:Name="Answer1Button"
+                            FontSize="14"
+                            TextColor="#654321"
+                            BackgroundColor="#E8DCC8"
+                            CornerRadius="10"
+                            HeightRequest="55"
+                            BorderColor="#8B5A2B"
+                            BorderWidth="1"
+                            Clicked="OnAnswerClicked"/>
+
+                    <Button x:Name="Answer2Button"
+                            FontSize="14"
+                            TextColor="#654321"
+                            BackgroundColor="#E8DCC8"
+                            CornerRadius="10"
+                            HeightRequest="55"
+                            BorderColor="#8B5A2B"
+                            BorderWidth="1"
+                            Clicked="OnAnswerClicked"/>
+
+                    <Button x:Name="Answer3Button"
+                            FontSize="14"
+                            TextColor="#654321"
+                            BackgroundColor="#E8DCC8"
+                            CornerRadius="10"
+                            HeightRequest="55"
+                            BorderColor="#8B5A2B"
+                            BorderWidth="1"
+                            Clicked="OnAnswerClicked"/>
+
+                    <Button x:Name="Answer4Button"
+                            FontSize="14"
+                            TextColor="#654321"
+                            BackgroundColor="#E8DCC8"
+                            CornerRadius="10"
+                            HeightRequest="55"
+                            BorderColor="#8B5A2B"
+                            BorderWidth="1"
+                            Clicked="OnAnswerClicked"/>
+                </VerticalStackLayout>
+
+                <!-- Result -->
+                <Label x:Name="ResultLabel"
+                       Text=""
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Navigation Buttons -->
+        <Grid Grid.Row="4" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button x:Name="NextButton"
+                    Grid.Column="0"
+                    Text="Next Question"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="#FFF8DC"
+                    BackgroundColor="#8B5A2B"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    IsVisible="False"
+                    Clicked="OnNextClicked"/>
+
+            <Button x:Name="RetakeButton"
+                    Grid.Column="1"
+                    Text="Retake Quiz"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="#FFF8DC"
+                    BackgroundColor="#6B8E23"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    IsVisible="False"
+                    Clicked="OnRetakeClicked"/>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
