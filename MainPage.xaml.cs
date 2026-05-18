@@ -1,11 +1,7 @@
-﻿// MainPage.xaml.cs
-
-
-namespace Sainauna;
+﻿namespace Sainauna;
 
 public partial class MainPage : ContentPage
 {
-    // Tutorial state
     private int _tutorialStep = 0;
     private List<TutorialStep> _tutorialSteps = new();
 
@@ -15,10 +11,7 @@ public partial class MainPage : ContentPage
         UpdateProgressDisplay();
         SetupTutorial();
 
-        // Subscribe to progress changes so UI updates automatically
         ProgressService.ProgressChanged += OnProgressChanged;
-
-        // Start animations and check for first launch
         this.Loaded += OnPageLoaded;
     }
 
@@ -67,10 +60,8 @@ public partial class MainPage : ContentPage
 
     private async void OnPageLoaded(object? sender, EventArgs e)
     {
-        // Run entry animations
         await RunEntryAnimations();
 
-        // Check if this is first launch (you can use Preferences to track this)
         bool hasSeenTutorial = Preferences.Get("HasSeenTutorial", false);
         if (!hasSeenTutorial)
         {
@@ -80,11 +71,9 @@ public partial class MainPage : ContentPage
 
     private async Task RunEntryAnimations()
     {
-        // Title pop-in
         await TitleLabel.FadeTo(1, 600, Easing.CubicOut);
         await TitleLabel.ScaleTo(1, 400, Easing.SpringOut);
 
-        // Buttons slide in
         await BaybayinButton.TranslateTo(0, 0, 500, Easing.CubicOut);
         await BaybayinButton.FadeTo(1, 400);
 
@@ -94,14 +83,11 @@ public partial class MainPage : ContentPage
         await TestButton.TranslateTo(0, 0, 500, Easing.CubicOut);
         await TestButton.FadeTo(1, 400);
 
-        // Progress border slide up
         await ProgressBorder.TranslateTo(0, 0, 500, Easing.CubicOut);
         await ProgressBorder.FadeTo(1, 400);
 
-        // Footer fade in
         await FooterLabel.FadeTo(1, 400);
 
-        // Header buttons
         await HomeButton.FadeTo(1, 300);
         await SettingsButton.FadeTo(1, 300);
     }
@@ -133,14 +119,12 @@ public partial class MainPage : ContentPage
 
         if (_tutorialStep >= _tutorialSteps.Count)
         {
-            // Tutorial complete
             Preferences.Set("HasSeenTutorial", true);
             await TutorialOverlay.FadeTo(0, 300);
             TutorialOverlay.IsVisible = false;
         }
         else
         {
-            // Animate content change
             await TutorialContent.FadeTo(0, 150);
             UpdateTutorialContent();
             await TutorialContent.FadeTo(1, 150);
@@ -154,7 +138,6 @@ public partial class MainPage : ContentPage
         TutorialOverlay.IsVisible = false;
     }
 
-    // Update progress bar and label
     private void UpdateProgressDisplay()
     {
         double percentage = ProgressService.ProgressPercentage;
@@ -162,46 +145,39 @@ public partial class MainPage : ContentPage
         ProgressLabel.Text = $"{percentage:F0}%";
     }
 
-    // Called when progress changes anywhere in the app
     private void OnProgressChanged()
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             UpdateProgressDisplay();
-            // Animate progress update
             await ProgressLabel.ScaleTo(1.2, 200);
             await ProgressLabel.ScaleTo(1, 200);
         });
     }
 
-    // Home icon clicked - refresh/go home
     private void OnHomeClicked(object sender, EventArgs e)
     {
         UpdateProgressDisplay();
     }
 
-    // Settings button clicked
     private async void OnSettingsClicked(object sender, EventArgs e)
     {
         await AnimateButtonPress(SettingsButton);
         await Navigation.PushAsync(new SettingsPage());
     }
 
-    // Baybayin Page button clicked
     private async void OnBaybayinClicked(object sender, EventArgs e)
     {
         await AnimateButtonPress(BaybayinButton);
         await Navigation.PushAsync(new BaybayinPage());
     }
 
-    // Learn Page button clicked
     private async void OnLearnClicked(object sender, EventArgs e)
     {
         await AnimateButtonPress(LearnButton);
         await Navigation.PushAsync(new LearnPage());
     }
 
-    // Test Your Baybayin button clicked
     private async void OnTestYourBaybayinClicked(object sender, EventArgs e)
     {
         await AnimateButtonPress(TestButton);
@@ -214,7 +190,6 @@ public partial class MainPage : ContentPage
         await button.ScaleTo(1, 100);
     }
 
-    // Unsubscribe from event when page is destroyed
     ~MainPage()
     {
         ProgressService.ProgressChanged -= OnProgressChanged;
@@ -227,25 +202,4 @@ public class TutorialStep
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
-}
-
-// Animation Behaviors (simplified - you can add these as separate classes if needed)
-public class FadeInBehavior : Behavior<VisualElement>
-{
-    public int Delay { get; set; } = 0;
-}
-
-public class PopInBehavior : Behavior<VisualElement>
-{
-    public int Delay { get; set; } = 0;
-}
-
-public class SlideUpBehavior : Behavior<VisualElement>
-{
-    public int Delay { get; set; } = 0;
-}
-
-public class SlideInBehavior : Behavior<VisualElement>
-{
-    public int Delay { get; set; } = 0;
 }
