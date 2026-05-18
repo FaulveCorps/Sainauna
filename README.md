@@ -35,7 +35,7 @@ Sainauna is a .NET MAUI Android app for learning Baybayin through guided lessons
 ## Build
 
 ```bash
-dotnet build /home/runner/work/Sainauna/Sainauna/Sainauna.sln
+dotnet build Sainauna.sln
 ```
 
 ## Notes
